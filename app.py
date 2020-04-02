@@ -1,6 +1,6 @@
 from flask import Flask
 import keras
-from tensorflow import tp
+import tensorflow as tf
 app = Flask(__name__)
 
 @app.route('/')
