@@ -9,6 +9,7 @@ import os
 import cv2
 import keras
 import tensorflow as tf
+from flask import jsonify
 
 import base64
 
@@ -16,4 +17,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return_dict = {
+                    'keras_api_version' :keras.__version__,
+    }
+    print(return_dict)
+    return jsonify(return_dict)
