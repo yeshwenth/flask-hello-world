@@ -1,7 +1,8 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_file
 from werkzeug.utils import secure_filename
 import boto3
+from uuid import uuid4
 
 app = Flask(__name__)
 
@@ -20,14 +21,19 @@ def home():
 def upload_file():
    return render_template('index.html')
 	
+
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_files():
 	if request.method == 'POST':
 		f = request.files['file']
 		# create a unique file name
-		f.save(secure_filename(f.filename))
+		print(type(f))
+		f_new_file_name = str(uuid4())
+		print(f_new_file_name)
+		f.save(secure_filename(f_new_file_name))
 		print("Test test")
-		return redirect(url_for('yesh'))
+		return send_file(f_new_file_name, mimetype='image/gif')
+		# return redirect(url_for('yesh'))
 		
 
 @app.route('/yesh')
@@ -37,10 +43,3 @@ def yesh():
 
 if __name__ == '__main__':
    app.run(debug = True)
-
-
- # steps
- # 1. Upload the image
- # 2. Once the image is uploaded, save the image in unique name, put it in S3
- # 3. Use that image, pass it to the ML function, that returns the predicted output
- # 4. Return that output to the user
