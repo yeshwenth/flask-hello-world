@@ -32,9 +32,10 @@ def upload_files():
 		print(f_new_file_name)
 		f.save(secure_filename(f_new_file_name))
 		print("Test test")
+		local_path = os.path.abspath(os.getcwd()) + "/" + f_new_file_name
+		s3.meta.client.upload_file(local_path, bucket_name, f_new_file_name, ExtraArgs={'ACL':'public-read'})
 		return send_file(f_new_file_name, mimetype='image/gif')
-		# return redirect(url_for('yesh'))
-		
+
 
 @app.route('/yesh')
 def yesh():
