@@ -10,7 +10,7 @@ boto3.setup_default_session(region_name='us-west-2')
 aws_access_key_id_= os.environ['aws_access_key_id_']
 aws_secret_access_key_=os.environ['aws_secret_access_key_']
 s3 = boto3.resource('s3',aws_access_key_id=aws_access_key_id_,aws_secret_access_key=aws_secret_access_key_)
-
+bucket_name = 'infer-test'
 
 @app.route('/')
 def home():
